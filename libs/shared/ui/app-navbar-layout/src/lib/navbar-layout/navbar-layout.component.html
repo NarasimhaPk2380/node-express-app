@@ -1,0 +1,27 @@
+<mat-toolbar color="primary" class="books--toolbar">
+	<mat-icon>menu</mat-icon>
+	<h1 class="">Book cart</h1>
+</mat-toolbar>
+<mat-sidenav-container class="books--container" autosize>
+	<mat-sidenav #sidenav class="books--sidenav" mode="side" opened="true">
+		<mat-nav-list>
+			<mat-list-item class="parent" routerLink="cart-search">
+				<span class="material-icons">search</span>
+				<span class="full-width">&nbsp;Search</span>
+			</mat-list-item>
+			<mat-list-item class="parent" routerLink="my-cart">
+				<span class="material-icons" [matBadge]="availableCartItem" matBadgeColor="warn">shopping_cart</span>
+				<span class="full-width">&nbsp;Cart</span>
+			</mat-list-item>
+			<mat-list-item class="parent" routerLink="my-collection">
+				<span class="material-icons">list_alt</span>
+				<span class="full-width">&nbsp;My Collection</span>
+			</mat-list-item>
+		</mat-nav-list>
+		<mat-nav-list>
+		</mat-nav-list>
+	</mat-sidenav>
+	<div class="books--sidenav-content">
+		<router-outlet></router-outlet>
+	</div>
+</mat-sidenav-container>

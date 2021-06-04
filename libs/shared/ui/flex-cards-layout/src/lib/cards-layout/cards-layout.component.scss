@@ -1,0 +1,50 @@
+.main-items-container {
+  text-align: center;
+  place-content: stretch start !important;
+  cursor: pointer;
+  img {
+    width: 150px;
+    height: 150px;
+  }
+  .title {
+    font-weight: 100;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+  .author {
+    span {
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
+    text-align: end;
+    font-size: 14px;
+  }
+  .mb-15 {
+    margin: 10px 0;
+  }
+  .content {
+    font-size: 14px;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+  .item-container {
+    border: 1px solid #000;
+    margin-bottom: 20px;
+    padding: 8px;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}

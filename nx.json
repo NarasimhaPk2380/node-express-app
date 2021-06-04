@@ -12,9 +12,12 @@
   "npmScope": "buyonline",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "MTc5YzhmZjgtZDlkOC00NjM4LWIyY2EtNTVjZTM5YmIzNDk1fHJlYWQtd3JpdGU=",
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
       }
     }
   },
@@ -25,6 +28,36 @@
     "bookscart-e2e": {
       "tags": [],
       "implicitDependencies": ["bookscart"]
+    },
+    "shared-data-access-services": {
+      "tags": []
+    },
+    "shared-data-access-models": {
+      "tags": []
+    },
+    "feature-cart-search": {
+      "tags": []
+    },
+    "feature-my-cart-items": {
+      "tags": []
+    },
+    "feature-my-collection": {
+      "tags": []
+    },
+    "feature-cart-details": {
+      "tags": []
+    },
+    "shared-ui-app-navbar-layout": {
+      "tags": []
+    },
+    "shared-ui-material": {
+      "tags": []
+    },
+    "shared-ui-flex-cards-layout": {
+      "tags": []
+    },
+    "shared-pipes-star-rating": {
+      "tags": []
     }
   }
 }

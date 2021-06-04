@@ -14,7 +14,36 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@buyonline/shared/data-access/services": [
+        "libs/shared/data-access/services/src/index.ts"
+      ],
+      "@buyonline/shared/data-access/models": [
+        "libs/shared/data-access/models/src/index.ts"
+      ],
+      "@buyonline/feature/cart-search": [
+        "libs/feature/cart-search/src/index.ts"
+      ],
+      "@buyonline/feature/my-cart-items": [
+        "libs/feature/my-cart-items/src/index.ts"
+      ],
+      "@buyonline/feature/my-collection": [
+        "libs/feature/my-collection/src/index.ts"
+      ],
+      "@buyonline/feature/cart-details": [
+        "libs/feature/cart-details/src/index.ts"
+      ],
+      "@buyonline/shared/ui/app-navbar-layout": [
+        "libs/shared/ui/app-navbar-layout/src/index.ts"
+      ],
+      "@buyonline/shared/ui/material": ["libs/shared/ui/material/src/index.ts"],
+      "@buyonline/shared/ui/flex-cards-layout": [
+        "libs/shared/ui/flex-cards-layout/src/index.ts"
+      ],
+      "@buyonline/shared/pipes/star-rating": [
+        "libs/shared/pipes/star-rating/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

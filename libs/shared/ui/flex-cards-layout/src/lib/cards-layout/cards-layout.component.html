@@ -1,0 +1,17 @@
+<div class="main-items-container" fxLayout="row wrap" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="20px" fxLayoutAlign="center">
+    <div class="item-container" fxFlex="20%" fxFlex.sm="30%" fxFlex.xs="100%" *ngFor="let card of cardsList; trackBy:trackByMethod" (click)="goToDetailsPage(card.id)">
+        <img [src]="card?.volumeInfo?.imageLinks?.smallThumbnail" alt="" />
+        <p class="title">{{card?.volumeInfo?.title}}</p>
+        <div class="content" [innerHTML]="card?.volumeInfo?.description"></div>
+        <div class="author mb-15">
+            <span>
+                Written by</span> 
+                <span>
+                {{card?.volumeInfo?.authors?.toString() || 'anonymous'}}<br>
+                </span>
+        </div>
+        <div *ngIf="showDelete == 'true'">
+            <button mat-raised-button color="primary" (click)="deleteCartItem(card.id)">Delete</button>
+        </div>
+    </div>
+</div>

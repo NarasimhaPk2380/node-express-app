@@ -52,7 +52,10 @@
               "apps/bookscart/src/favicon.ico",
               "apps/bookscart/src/assets"
             ],
-            "styles": ["apps/bookscart/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "apps/bookscart/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -147,6 +150,256 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/bookscart-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "shared-data-access-services": {
+      "projectType": "library",
+      "root": "libs/shared/data-access/services",
+      "sourceRoot": "libs/shared/data-access/services/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/data-access/services"],
+          "options": {
+            "jestConfig": "libs/shared/data-access/services/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/data-access/services/src/**/*.ts",
+              "libs/shared/data-access/services/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-data-access-models": {
+      "projectType": "library",
+      "root": "libs/shared/data-access/models",
+      "sourceRoot": "libs/shared/data-access/models/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/data-access/models"],
+          "options": {
+            "jestConfig": "libs/shared/data-access/models/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/data-access/models/src/**/*.ts",
+              "libs/shared/data-access/models/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "feature-cart-search": {
+      "projectType": "library",
+      "root": "libs/feature/cart-search",
+      "sourceRoot": "libs/feature/cart-search/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/cart-search"],
+          "options": {
+            "jestConfig": "libs/feature/cart-search/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/cart-search/src/**/*.ts",
+              "libs/feature/cart-search/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "feature-my-cart-items": {
+      "projectType": "library",
+      "root": "libs/feature/my-cart-items",
+      "sourceRoot": "libs/feature/my-cart-items/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/my-cart-items"],
+          "options": {
+            "jestConfig": "libs/feature/my-cart-items/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/my-cart-items/src/**/*.ts",
+              "libs/feature/my-cart-items/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "feature-my-collection": {
+      "projectType": "library",
+      "root": "libs/feature/my-collection",
+      "sourceRoot": "libs/feature/my-collection/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/my-collection"],
+          "options": {
+            "jestConfig": "libs/feature/my-collection/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/my-collection/src/**/*.ts",
+              "libs/feature/my-collection/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "feature-cart-details": {
+      "projectType": "library",
+      "root": "libs/feature/cart-details",
+      "sourceRoot": "libs/feature/cart-details/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature/cart-details"],
+          "options": {
+            "jestConfig": "libs/feature/cart-details/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature/cart-details/src/**/*.ts",
+              "libs/feature/cart-details/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-ui-app-navbar-layout": {
+      "projectType": "library",
+      "root": "libs/shared/ui/app-navbar-layout",
+      "sourceRoot": "libs/shared/ui/app-navbar-layout/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/ui/app-navbar-layout"],
+          "options": {
+            "jestConfig": "libs/shared/ui/app-navbar-layout/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/ui/app-navbar-layout/src/**/*.ts",
+              "libs/shared/ui/app-navbar-layout/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-ui-material": {
+      "projectType": "library",
+      "root": "libs/shared/ui/material",
+      "sourceRoot": "libs/shared/ui/material/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/ui/material"],
+          "options": {
+            "jestConfig": "libs/shared/ui/material/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/ui/material/src/**/*.ts",
+              "libs/shared/ui/material/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-ui-flex-cards-layout": {
+      "projectType": "library",
+      "root": "libs/shared/ui/flex-cards-layout",
+      "sourceRoot": "libs/shared/ui/flex-cards-layout/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/ui/flex-cards-layout"],
+          "options": {
+            "jestConfig": "libs/shared/ui/flex-cards-layout/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/ui/flex-cards-layout/src/**/*.ts",
+              "libs/shared/ui/flex-cards-layout/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-pipes-star-rating": {
+      "projectType": "library",
+      "root": "libs/shared/pipes/star-rating",
+      "sourceRoot": "libs/shared/pipes/star-rating/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/pipes/star-rating"],
+          "options": {
+            "jestConfig": "libs/shared/pipes/star-rating/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/pipes/star-rating/src/**/*.ts",
+              "libs/shared/pipes/star-rating/src/**/*.html"
+            ]
           }
         }
       }

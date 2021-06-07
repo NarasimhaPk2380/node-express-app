@@ -4,9 +4,9 @@ import { CartItemResolverService } from '@buyonline/shared/data-access/services'
 
 const routes: Routes = [
   {
-    path: 'cart-search',
+    path: 'search',
     loadChildren: () =>
-      import('@buyonline/feature/cart-search').then((m) => m.CartSearchModule),
+      import('@buyonline/feature/search').then((m) => m.FeatureSearchModule),
   },
   {
     path: 'my-cart',
@@ -31,13 +31,18 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'checkout',
+    loadChildren: () =>
+      import('@buyonline/feature/checkout').then((m) => m.CheckoutModule),
+  },
+  {
     path: '',
-    redirectTo: '/cart-search',
+    redirectTo: '/search',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: '/cart-search',
+    redirectTo: '/search',
   },
 ];
 

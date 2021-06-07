@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CartSearchLayoutComponent } from './cart-search-layout.component';
+import { CheckoutLayoutComponent } from './checkout-layout.component';
 
-describe('CartSearchLayoutComponent', () => {
-  let component: CartSearchLayoutComponent;
-  let fixture: ComponentFixture<CartSearchLayoutComponent>;
+describe('CheckoutLayoutComponent', () => {
+  let component: CheckoutLayoutComponent;
+  let fixture: ComponentFixture<CheckoutLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CartSearchLayoutComponent ]
+      declarations: [ CheckoutLayoutComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CartSearchLayoutComponent);
+    fixture = TestBed.createComponent(CheckoutLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

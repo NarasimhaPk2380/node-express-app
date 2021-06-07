@@ -3,7 +3,6 @@ module.exports = {
     '<rootDir>/apps/bookscart',
     '<rootDir>/libs/shared/data-access/services',
     '<rootDir>/libs/shared/data-access/models',
-    '<rootDir>/libs/feature/cart-search',
     '<rootDir>/libs/feature/my-cart-items',
     '<rootDir>/libs/feature/my-collection',
     '<rootDir>/libs/feature/cart-details',
@@ -11,5 +10,8 @@ module.exports = {
     '<rootDir>/libs/shared/ui/material',
     '<rootDir>/libs/shared/ui/flex-cards-layout',
     '<rootDir>/libs/shared/pipes/star-rating',
+    '<rootDir>/libs/feature/checkout',
+    '<rootDir>/libs/feature/feature-search',
+    '<rootDir>/libs/feature/search',
   ],
 };

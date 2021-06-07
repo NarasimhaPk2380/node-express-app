@@ -1,0 +1,14 @@
+.checkout--container {
+  min-height: calc(100vh - 0px);
+  text-align: center;
+  // border: 1px solid blue;
+  .flex--item {
+    padding: 10px;
+    img {
+      width: 100%;
+    }
+  }
+  .success--text {
+    color: green;
+  }
+}

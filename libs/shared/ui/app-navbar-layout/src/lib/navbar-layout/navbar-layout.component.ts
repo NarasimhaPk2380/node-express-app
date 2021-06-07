@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { appSubjectI } from '@buyonline/shared/data-access/models';
+import { appSubject } from '@buyonline/shared/data-access/models';
 import { UtilsService } from '@buyonline/shared/data-access/services';
 
 @Component({
@@ -16,7 +16,7 @@ export class NavbarLayoutComponent implements OnInit {
   constructor(private utilsSrvc: UtilsService) {}
 
   ngOnInit(): void {
-    this.utilsSrvc.bookAppSubject$.subscribe((event: appSubjectI) => {
+    this.utilsSrvc.bookAppSubject$.subscribe((event: appSubject) => {
       if (event?.type === 'addToCart') {
         this.availableCartItem = this.utilsSrvc.modifybooksAppJson?.cartItems?.length;
       }

@@ -1,36 +1,37 @@
 <div class="book--details">
-    <img class="book--details__image" [src]="bookDetailsJson?.volumeInfo?.imageLinks?.thumbnail">
-    <div class="book--details__text">
+    <img class="book--details--image" [src]="bookDetailsJson?.volumeInfo?.imageLinks?.thumbnail">
+    <div class="book--details--text">
         <ul>
             <li>
-                <label for="rating">Rating</label>
+                <!-- <label for="rating">Rating</label> -->
+                <p class="label">Rating</p>
                 <button mat-icon-button color="accent" *ngFor="let ratingId of ratingArr;index as i">
                     <span class="material-icons">{{i.toString() | starRating :availableRating.toString()}}</span>
                 </button>
               </li>
             <li>
-              <label for="publisher">Publisher</label>
+              <p class="label">Publisher</p>
                <p>{{bookDetailsJson?.volumeInfo?.publisher}}</p>
             </li>
             <li>
-              <label for="city">Page Count</label>
+              <p class="label">Page Count</p>
              <p>{{bookDetailsJson?.volumeInfo?.pageCount}}</p>
             </li>
             <li>
-                <label for="Language">Language</label>
+                <p class="label">Language</p>
                 <p>{{bookDetailsJson?.volumeInfo?.language}}</p>
               </li>
               <li>
-                <label for="description">Description</label>
+                <p class="label">Description</p>
                 <p [innerHTML]="bookDetailsJson?.volumeInfo?.description"></p>
               </li>
               <li>
-                <label for="description">Written By</label>
+                <p class="label">Written By</p>
                 <p [innerHTML]="bookDetailsJson?.volumeInfo?.authors?.toString()"></p>
               </li>
               <li>
                 <button  mat-raised-button color="primary" (click)="addToCart()">Add to cart</button>&nbsp;
-                <button  mat-raised-button color="primary" routerLink="/search/checkout">Buy</button>
+                <button  mat-raised-button color="primary" (click)="addToCart()" routerLink="/checkout">Buy</button>
               </li>
         </ul>
     </div>

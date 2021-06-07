@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilsService } from '@buyonline/shared/data-access/services';
-import { bookI } from '@buyonline/shared/data-access/models';
+import { book } from '@buyonline/shared/data-access/models';
 
 @Component({
   selector: 'buyonline-cards-layout',
@@ -9,7 +9,7 @@ import { bookI } from '@buyonline/shared/data-access/models';
   styleUrls: ['./cards-layout.component.scss'],
 })
 export class CardsLayoutComponent implements OnInit {
-  @Input() cardsList: Array<bookI> = [];
+  @Input() cardsList: Array<book> = [];
   @Input() showDelete: string = 'false';
   @Output() getEventFromCard = new EventEmitter();
 

@@ -3,31 +3,31 @@ import { Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
 import {
   UtilsService,
-  AppService,
+  CartService,
 } from '@buyonline/shared/data-access/services';
-import { appSubjectI, bookI } from '@buyonline/shared/data-access/models';
+import { appSubject, book } from '@buyonline/shared/data-access/models';
 
 @Component({
-  selector: 'buyonline-cart-search-layout',
-  templateUrl: './cart-search-layout.component.html',
-  styleUrls: ['./cart-search-layout.component.scss'],
+  selector: 'buyonline-search-layout',
+  templateUrl: './search-layout.component.html',
+  styleUrls: ['./search-layout.component.scss'],
 })
-export class CartSearchLayoutComponent implements OnInit {
-  booksList: Array<bookI> = [];
+export class SearchLayoutComponent implements OnInit {
+  booksList: Array<book> = [];
   bookSearchText$ = new Subject<string>();
   booksSubscription: Subscription = new Subscription();
   spinner!: Observable<boolean>;
   constructor(
-    private appSrvc: AppService,
+    private cartSrvc: CartService,
     private utilsSrvc: UtilsService,
     private router: Router
   ) {
-    this.booksSubscription = this.appSrvc
+    this.booksSubscription = this.cartSrvc
       .searchBooks(this.bookSearchText$)
-      .subscribe((booksResponse: Array<bookI>) => {
+      .subscribe((booksResponse: Array<book>) => {
         this.booksList = booksResponse;
       });
-    this.utilsSrvc.bookAppSubject$.subscribe((event: appSubjectI) => {
+    this.utilsSrvc.bookAppSubject$.subscribe((event: appSubject) => {
       if (event?.type === 'spinner') {
         this.spinner = event.value;
       }

@@ -3,7 +3,7 @@
         <p>Cart is empty, <a routerLink="search">Please go to search</a></p>
     </div>
     <div class="checkout--cart" *ngIf="cartItemsList?.length">
-         <button mat-raised-button color="primary" routerLink="/search/checkout">Proceed to checkout</button>
+         <button mat-raised-button color="primary" routerLink="/checkout">Proceed to checkout</button>
     </div>
 
     <buyonline-cards-layout [cardsList]="cartItemsList" showDelete='true' (getEventFromCard)="updateCartItems()"></buyonline-cards-layout>

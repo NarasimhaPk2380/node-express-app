@@ -21,9 +21,6 @@
       "@buyonline/shared/data-access/models": [
         "libs/shared/data-access/models/src/index.ts"
       ],
-      "@buyonline/feature/cart-search": [
-        "libs/feature/cart-search/src/index.ts"
-      ],
       "@buyonline/feature/my-cart-items": [
         "libs/feature/my-cart-items/src/index.ts"
       ],
@@ -42,7 +39,12 @@
       ],
       "@buyonline/shared/pipes/star-rating": [
         "libs/shared/pipes/star-rating/src/index.ts"
-      ]
+      ],
+      "@buyonline/feature/checkout": ["libs/feature/checkout/src/index.ts"],
+      "@buyonline/feature/feature-search": [
+        "libs/feature/feature-search/src/index.ts"
+      ],
+      "@buyonline/feature/search": ["libs/feature/search/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

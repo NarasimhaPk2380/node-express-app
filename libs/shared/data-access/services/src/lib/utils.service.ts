@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
-  appSubjectI,
-  bookI,
-  booksAppI,
+  appSubject,
+  billingAddress,
+  book,
+  booksApp,
 } from '@buyonline/shared/data-access/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilsService {
-  appSubject$ = new Subject<appSubjectI>();
-  booksAppJson: booksAppI = {
+  appSubject$ = new Subject<appSubject>();
+  booksAppJson: booksApp = {
     cartItems: [],
     myCollection: [],
     billingAddress: {},
   };
   constructor() {}
 
-  set modifybooksAppJson(data: booksAppI) {
+  set modifybooksAppJson(data: booksApp) {
     this.booksAppJson = { ...data };
   }
-  get modifybooksAppJson(): booksAppI {
+  get modifybooksAppJson(): booksApp {
     return this.booksAppJson;
   }
 
@@ -29,7 +30,7 @@ export class UtilsService {
     return this.appSubject$.asObservable();
   }
 
-  addItemToCart(data: bookI) {
+  addItemToCart(data: book) {
     const isItemAvailableInList = this.booksAppJson?.cartItems?.some(
       (book) => book?.id === data?.id
     );
@@ -41,6 +42,16 @@ export class UtilsService {
       (book) => book?.id === bookId
     );
     this.booksAppJson?.cartItems?.splice(itemIndex, 1);
+    this.appSubject$.next({ type: 'addToCart', value: '' });
+  }
+
+  submitOrder(billingAddress: billingAddress) {
+    this.modifybooksAppJson = {
+      ...this.modifybooksAppJson,
+      billingAddress,
+      myCollection: [...this.modifybooksAppJson.cartItems],
+      cartItems: [],
+    };
     this.appSubject$.next({ type: 'addToCart', value: '' });
   }
 }

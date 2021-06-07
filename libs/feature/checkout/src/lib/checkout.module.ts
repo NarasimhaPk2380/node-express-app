@@ -1,26 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@buyonline/shared/ui/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FlexCardsLayoutModule } from '@buyonline/shared/ui/flex-cards-layout';
-import { CartSearchLayoutComponent } from './cart-search-layout/cart-search-layout.component';
+
+import { CheckoutLayoutComponent } from './checkout-layout/checkout-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: CartSearchLayoutComponent,
+    component: CheckoutLayoutComponent,
   },
 ];
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     FlexLayoutModule,
-    FlexCardsLayoutModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [CartSearchLayoutComponent],
+  declarations: [CheckoutLayoutComponent],
 })
-export class CartSearchModule {}
+export class CheckoutModule {}

@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'feature-cart-search',
+  displayName: 'feature-search',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: '../../../coverage/libs/feature/cart-search',
+  coverageDirectory: '../../../coverage/libs/feature/search',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',

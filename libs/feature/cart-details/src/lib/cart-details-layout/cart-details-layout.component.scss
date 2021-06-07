@@ -4,21 +4,21 @@
 .book--details {
   padding: 20px 40px 40px;
   display: flex;
-  &__image {
+  &--image {
     margin: 20px 30px 0 0;
     width: 200px;
     object-fit: contain;
     align-self: flex-start;
   }
-  &__text {
+  &--text {
     flex: 1 1 auto;
   }
   ul {
     list-style-type: none;
     li {
-      label {
+      .label {
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 500;
         align-self: flex-start;
         margin-right: 10px;
       }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilsService } from '@buyonline/shared/data-access/services';
-import { bookI } from '@buyonline/shared/data-access/models';
+import { book } from '@buyonline/shared/data-access/models';
 
 @Component({
   selector: 'buyonline-cart-details-layout',
@@ -9,7 +9,7 @@ import { bookI } from '@buyonline/shared/data-access/models';
   styleUrls: ['./cart-details-layout.component.scss'],
 })
 export class CartDetailsLayoutComponent implements OnInit {
-  bookDetailsJson!: bookI;
+  bookDetailsJson!: book;
   availableRating = 3;
   ratingArr: Array<number> = [1, 2, 3, 4, 5];
   constructor(

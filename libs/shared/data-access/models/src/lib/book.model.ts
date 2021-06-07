@@ -1,9 +1,9 @@
-export interface appSubjectI {
+export interface appSubject {
   type: string;
   value: any;
 }
 
-export interface bookI {
+export interface book {
   id: string;
   volumeInfo?: {
     title: string;
@@ -23,16 +23,16 @@ export interface bookI {
   };
 }
 
-export interface billingAddressI {
+export interface billingAddress {
   name: string;
   email: string;
   phoneNumber: string;
   address: string;
 }
 
-export interface booksAppI {
-  cartItems: Array<bookI>;
-  myCollection: Array<bookI>;
-  billingAddress: billingAddressI | {};
+export interface booksApp {
+  cartItems: Array<book>;
+  myCollection: Array<book>;
+  billingAddress: billingAddress | {};
   searchedText?: string;
 }

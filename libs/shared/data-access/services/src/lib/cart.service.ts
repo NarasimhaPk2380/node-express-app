@@ -7,7 +7,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { bookI } from '@buyonline/shared/data-access/models';
+import { book } from '@buyonline/shared/data-access/models';
 
 import { ApiService } from './api.service';
 import { UtilsService } from './utils.service';
@@ -15,11 +15,11 @@ import { UtilsService } from './utils.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AppService {
+export class CartService {
   constructor(private apiService: ApiService, private utilSrvc: UtilsService) {}
 
   // API calls invoking
-  searchBooks(searchText$: Observable<string>): Observable<Array<bookI>> {
+  searchBooks(searchText$: Observable<string>): Observable<Array<book>> {
     return searchText$.pipe(
       tap((_) =>
         this.utilSrvc.appSubject$.next({
@@ -38,16 +38,16 @@ export class AppService {
                   value: false,
                 })
               ),
-              map((booksJson) => booksJson.items as Array<bookI>)
+              map((booksJson) => booksJson.items as Array<book>)
             )
           : of([])
       )
     );
   }
 
-  retrieveBookId(bookId: string): Observable<bookI> {
+  retrieveBookId(bookId: string): Observable<book> {
     return this.apiService
       .apiRequest('GET', { id: bookId }, {})
-      .pipe(map((booksJson) => booksJson as bookI));
+      .pipe(map((booksJson) => booksJson as book));
   }
 }

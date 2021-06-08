@@ -21,16 +21,13 @@ export class CheckoutLayoutComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private utilsSrvc: UtilsService,
-    private snackBar: MatSnackBar,
-    private router: Router
+    public snackBar: MatSnackBar,
+    public router: Router
   ) {}
 
   ngOnInit(): void {
     this.checkoutForm = this.fb.group({
-      name: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^\S*$/),
-      ]),
+      name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       phoneNumber: new FormControl('', [
         Validators.required,

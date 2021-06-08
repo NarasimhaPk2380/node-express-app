@@ -52,4 +52,34 @@ describe('ApiService', () => {
     req.flush([book]);
     expect(result[0]).toEqual(book);
   });
+  it('Should call api request if the query params are given', () => {
+    let result: book[] = [];
+    service.apiRequest('GET', {}, { q: 'ang' }).subscribe((data) => {
+      result = data;
+    });
+    const req = httpTestingController.expectOne({
+      method: 'GET',
+      url: `${baseUrl}?q=ang`,
+    });
+    req.flush([book]);
+    expect(result[0]).toEqual(book);
+  });
+
+  it('Should display error', () => {
+    let errorObj: any = {};
+    service.apiRequest('GET', {}, {}).subscribe(
+      (data) => {},
+      (err) => {
+        errorObj = err;
+      }
+    );
+    const req = httpTestingController.expectOne({
+      method: 'GET',
+      url: `${baseUrl}`,
+    });
+
+    req.flush('Failed', { status: 404, statusText: 'Not Found' });
+    expect(errorObj?.status).toEqual(404);
+    expect(errorObj?.error).toEqual('Failed');
+  });
 });

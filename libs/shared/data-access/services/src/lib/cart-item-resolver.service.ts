@@ -8,12 +8,12 @@ import { CartService } from '@buyonline/shared/data-access/services';
   providedIn: 'root',
 })
 export class CartItemResolverService {
-  constructor(private appSrvc: CartService) {}
+  constructor(private cartSrvc: CartService) {}
 
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<book> | Promise<book> | any {
-    return this.appSrvc.retrieveBookId(route.params?.bookId);
+    return this.cartSrvc.retrieveBookId(route.params?.bookId);
   }
 }

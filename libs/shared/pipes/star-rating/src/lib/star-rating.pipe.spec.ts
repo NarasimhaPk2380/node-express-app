@@ -1,6 +1,6 @@
 import { StarRatingPipe } from './star-rating.pipe';
 describe('StarRatingPipe', () => {
-  let pipe: any;
+  let pipe: StarRatingPipe;
   it('create an instance', () => {
     pipe = new StarRatingPipe();
     expect(pipe).toBeTruthy();

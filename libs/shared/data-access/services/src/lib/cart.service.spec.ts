@@ -1,17 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-import { appSubject } from '@buyonline/shared/data-access/models';
-import {
-  ApiService,
-  CartService,
-} from '@buyonline/shared/data-access/services';
-import { from, of, Subject } from 'rxjs';
-import { UtilsService } from './utils.service';
+import { ApiService } from './api.service';
+import { CartService } from './cart.service';
+import { Store } from '@ngrx/store';
+import { from, of } from 'rxjs';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { loadBooksList } from '@buyonline/shared/data-access/state';
 
-const UtilsServiceMock = {
-  appSubject$: new Subject<appSubject>(),
-};
 const ApiServiceMock = {
-  apiRequest(method: string, body?: any, params?: any) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  apiRequest(method: string, body?: any) {
     if (!body?.id) {
       return from([
         { id: '12', items: [{ volumeInfo: { title: 'Angular' } }] },
@@ -24,6 +21,9 @@ const ApiServiceMock = {
 
 describe('CartService', () => {
   let service: CartService;
+  const storeMock = {
+    dispatch: jasmine.createSpy('dispatch'),
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -31,10 +31,7 @@ describe('CartService', () => {
           provide: ApiService,
           useValue: ApiServiceMock,
         },
-        {
-          provide: UtilsService,
-          useValue: UtilsServiceMock,
-        },
+        { provide: Store, useValue: storeMock },
       ],
     });
     service = TestBed.inject(CartService);
@@ -50,10 +47,11 @@ describe('CartService', () => {
     });
   });
 
-  it('Should get the list when user searchs with the random text', (done) => {
-    const book$ = service.searchBooks(of('ang'));
-    book$.subscribe((data) => {
-      expect(data?.length).toBe(1);
+  it('Should dispatch loadBooks action with the text', (done) => {
+    service.searchBooks(of('ang')).subscribe(() => {
+      expect(storeMock.dispatch).toHaveBeenCalledWith(
+        loadBooksList({ searchText: 'ang' })
+      );
       done();
     });
   });

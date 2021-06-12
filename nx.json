@@ -59,10 +59,10 @@
     "feature-checkout": {
       "tags": []
     },
-    "feature-feature-search": {
+    "feature-search": {
       "tags": []
     },
-    "feature-search": {
+    "shared-data-access-state": {
       "tags": []
     }
   }

@@ -2,33 +2,45 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { book } from '@buyonline/shared/data-access/models';
-import {
-  ApiService,
-  CartService,
-  UtilsService,
-} from '@buyonline/shared/data-access/services';
+import { CartService } from '@buyonline/shared/data-access/services';
 import { Observable, of } from 'rxjs';
 import { MaterialModule } from '@buyonline/shared/ui/material';
 import { FlexCardsLayoutModule } from '@buyonline/shared/ui/flex-cards-layout';
 import { SearchLayoutComponent } from './search-layout.component';
+import { BooksFacade } from '@buyonline/shared/data-access/state';
+import { Store } from '@ngrx/store';
+import { By } from '@angular/platform-browser';
 
 class RouterStub {
   url = '';
-  navigate(commands: any[], extras?: any) {}
+  navigate() {
+    return;
+  }
 }
 class CartServiceMock {
-  searchBooks(txt: Observable<string>): Observable<Array<book>> {
+  searchBooks(): Observable<Array<book>> {
     return of([{ id: '1' }]);
   }
 }
 
+const BooksFacadeMock = {
+  searchedBooks$: of([{ id: '1' }]),
+  get spinner$() {
+    return of(false);
+  },
+  get searchText$() {
+    return of('abc');
+  },
+};
+
 describe('SearchLayoutComponent', () => {
   let component: SearchLayoutComponent;
   let fixture: ComponentFixture<SearchLayoutComponent>;
-  let UtilsServiceMock = {
-    bookAppSubject$: of({ type: 'spinner', value: false }),
+  const storeMock = {
+    dispatch() {
+      return;
+    },
   };
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SearchLayoutComponent],
@@ -39,10 +51,8 @@ describe('SearchLayoutComponent', () => {
           provide: CartService,
           useClass: CartServiceMock,
         },
-        {
-          provide: UtilsService,
-          useValue: UtilsServiceMock,
-        },
+        { provide: Store, useValue: storeMock },
+        { provide: BooksFacade, useValue: BooksFacadeMock },
       ],
     }).compileComponents();
   });
@@ -51,6 +61,7 @@ describe('SearchLayoutComponent', () => {
     fixture = TestBed.createComponent(SearchLayoutComponent);
     component = fixture.componentInstance;
     TestBed.inject(CartService);
+    TestBed.inject(BooksFacade);
     fixture.detectChanges();
   });
 
@@ -58,14 +69,13 @@ describe('SearchLayoutComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show spinner false on init', () => {
-    expect(component.spinner).toBeFalsy();
+  it('should display booksList count as one', () => {
+    component.bookSearchText$.next('');
+    expect(component.booksList?.length).toBe(1);
   });
 
-  it('should call goToDetailsPage(bookId: string)', () => {
-    spyOn(component, 'goToDetailsPage').and.callThrough();
-    component.goToDetailsPage('2222');
-    // fixture.detectChanges();
-    expect(component.goToDetailsPage).toHaveBeenCalled();
+  it('check if searchtext observable has certain value', () => {
+    const inputElement = fixture.debugElement.query(By.css('#searchInput'));
+    expect(inputElement.nativeElement.value).toBe('abc');
   });
 });

@@ -5,43 +5,32 @@ import {
   distinctUntilChanged,
   map,
   switchMap,
-  tap,
 } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 import { book } from '@buyonline/shared/data-access/models';
 
 import { ApiService } from './api.service';
-import { UtilsService } from './utils.service';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { bookState, loadBooksList } from '@buyonline/shared/data-access/state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  constructor(private apiService: ApiService, private utilSrvc: UtilsService) {}
+  constructor(
+    private apiService: ApiService,
+    private store: Store<bookState>
+  ) {}
 
   // API calls invoking
   searchBooks(searchText$: Observable<string>): Observable<Array<book>> {
     return searchText$.pipe(
-      tap((_) =>
-        this.utilSrvc.appSubject$.next({
-          type: 'spinner',
-          value: true,
-        })
-      ),
       debounceTime(400),
       distinctUntilChanged(),
-      switchMap((searchText) =>
-        searchText
-          ? this.apiService.apiRequest('GET', {}, { q: searchText }).pipe(
-              tap((_) =>
-                this.utilSrvc.appSubject$.next({
-                  type: 'spinner',
-                  value: false,
-                })
-              ),
-              map((booksJson) => booksJson.items as Array<book>)
-            )
-          : of([])
-      )
+      switchMap((searchText) => {
+        this.store.dispatch(loadBooksList({ searchText }));
+        return of([]);
+      })
     );
   }
 

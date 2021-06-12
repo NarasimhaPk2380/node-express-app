@@ -13,5 +13,6 @@ module.exports = {
     '<rootDir>/libs/feature/checkout',
     '<rootDir>/libs/feature/feature-search',
     '<rootDir>/libs/feature/search',
+    '<rootDir>/libs/shared/data-access/state',
   ],
 };

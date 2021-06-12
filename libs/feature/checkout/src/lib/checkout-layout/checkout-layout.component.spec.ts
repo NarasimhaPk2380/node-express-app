@@ -5,26 +5,23 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CheckoutLayoutComponent } from './checkout-layout.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '@buyonline/shared/ui/material';
-import { of } from 'rxjs';
-// class RouterStub {
-//   url = '';
-//   navigate(commands: any[], extras?: any) {}
-// }
-class MatSnackBarMock {
-  open(str: string, str1: string, options: any) {
-    return {
-      OnAction() {
-        return of();
-      },
-    };
-  }
-}
+import { By } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { submitOrder } from '@buyonline/shared/data-access/state';
 describe('CheckoutLayoutComponent', () => {
   let component: CheckoutLayoutComponent;
   let fixture: ComponentFixture<CheckoutLayoutComponent>;
-  let matService: MatSnackBar;
-  let mockRouter = {
+  const mockRouter = {
     navigate: jasmine.createSpy('navigate'),
+  };
+  const storeMock = {
+    dispatch: jasmine.createSpy('dispatch'),
+  };
+  const fakeAddressJson = {
+    name: 'asdad',
+    email: 'asdad@gmail.com',
+    phoneNumber: '1234567891',
+    address: 'asdad',
   };
 
   beforeEach(async () => {
@@ -38,7 +35,8 @@ describe('CheckoutLayoutComponent', () => {
       ],
       providers: [
         { provide: Router, useValue: mockRouter },
-        { provide: MatSnackBar, useClass: MatSnackBarMock },
+        { provide: Store, useValue: storeMock },
+        MatSnackBar,
       ],
     }).compileComponents();
   });
@@ -46,7 +44,7 @@ describe('CheckoutLayoutComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CheckoutLayoutComponent);
     component = fixture.componentInstance;
-    matService = TestBed.inject(MatSnackBar);
+    TestBed.inject(MatSnackBar);
     fixture.detectChanges();
   });
 
@@ -54,27 +52,46 @@ describe('CheckoutLayoutComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should invoke submitCheckout()', () => {
-    spyOn(component, 'submitCheckout').and.callThrough();
-    spyOn(component.snackBar, 'open').and.returnValue({
-      onAction() {
-        return of();
-      },
-    });
-    // spyOn(mockRouter, 'navigate').and.callThrough();
-    component.submitCheckout();
-    expect(component.submitCheckout).toHaveBeenCalled();
-    setTimeout(() => {
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/my-collection']);
-    });
-  });
-
   it('checkout form invalid when empty', () => {
     expect(component.checkoutForm.valid).toBeFalsy();
   });
+
+  it('Name field validity', () => {
+    let errors;
+    const name = component.checkoutForm.controls['name'];
+    expect(name.valid).toBeFalsy();
+
+    // Name field is required
+    errors = name.errors || {};
+    expect(errors['required']).toBeTruthy();
+
+    name.setValue('naras');
+    errors = name.errors || {};
+    expect(errors['required']).toBeFalsy();
+  });
+
+  it('Phone number validity', () => {
+    let errors;
+    const phNum = component.checkoutForm.controls['phoneNumber'];
+    expect(phNum.valid).toBeFalsy();
+
+    // Phone number field is required
+    errors = phNum.errors || {};
+    expect(errors['required']).toBeTruthy();
+
+    phNum.setValue('as');
+    errors = phNum.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(errors['pattern']).toBeTruthy();
+
+    phNum.setValue('1234567891');
+    errors = phNum.errors || {};
+    expect(errors['required']).toBeFalsy();
+    expect(errors['pattern']).toBeFalsy();
+  });
   it('email field validity', () => {
-    let errors: any = {};
-    let email = component.checkoutForm.controls['email'];
+    let errors;
+    const email = component.checkoutForm.controls['email'];
     expect(email.valid).toBeFalsy();
 
     // Email field is required
@@ -92,5 +109,44 @@ describe('CheckoutLayoutComponent', () => {
     errors = email.errors || {};
     expect(errors['required']).toBeFalsy();
     expect(errors['email']).toBeFalsy();
+  });
+
+  it('should not click submitOrder when form is invalid', () => {
+    component.checkoutForm.setValue({
+      name: 'asdad',
+      email: 'asdadgmail.com',
+      phoneNumber: '1234567891',
+      address: 'asdad',
+    });
+    const buttonElement = fixture.debugElement.query(
+      By.css('.btn-submit-order')
+    );
+    expect(buttonElement.nativeElement.getAttribute('disabled')).toBe('true');
+  });
+
+  it('should click submitOrder and check mycollection updated', () => {
+    component.checkoutForm.setValue(fakeAddressJson);
+    fixture.detectChanges();
+    const buttonElement = fixture.debugElement.query(
+      By.css('.btn-submit-order')
+    );
+    buttonElement.nativeElement.click();
+    expect(component.checkoutForm.value).toEqual(fakeAddressJson);
+  });
+  it('should click submitOrder and check snackbar opened', (done) => {
+    component.checkoutForm.setValue(fakeAddressJson);
+    fixture.detectChanges();
+    const buttonElement = fixture.debugElement.query(
+      By.css('.btn-submit-order')
+    );
+    buttonElement.nativeElement.click();
+    component.snackBar._openedSnackBarRef?.onAction().subscribe(() => {
+      expect(mockRouter.navigate).toBeCalledWith(['/my-collection']);
+      done();
+    });
+    component.snackBar._openedSnackBarRef?.dismissWithAction();
+    expect(storeMock.dispatch).toHaveBeenCalledWith(
+      submitOrder({ billingAddress: fakeAddressJson })
+    );
   });
 });

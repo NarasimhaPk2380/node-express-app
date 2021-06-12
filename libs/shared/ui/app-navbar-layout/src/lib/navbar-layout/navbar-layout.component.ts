@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { appSubject } from '@buyonline/shared/data-access/models';
-import { UtilsService } from '@buyonline/shared/data-access/services';
+import { BooksFacade } from '@buyonline/shared/data-access/state';
 
 @Component({
   selector: 'buyonline-navbar-layout',
@@ -9,17 +8,15 @@ import { UtilsService } from '@buyonline/shared/data-access/services';
   styleUrls: ['./navbar-layout.component.scss'],
 })
 export class NavbarLayoutComponent implements OnInit {
-  availableCartItem: number = 0;
+  availableCartItem = 0;
   @ViewChild('sidenav')
   sidenav!: MatSidenav;
 
-  constructor(private utilsSrvc: UtilsService) {}
+  constructor(private booksFacade: BooksFacade) {}
 
   ngOnInit(): void {
-    this.utilsSrvc.bookAppSubject$.subscribe((event: appSubject) => {
-      if (event?.type === 'addToCart') {
-        this.availableCartItem = this.utilsSrvc.modifybooksAppJson?.cartItems?.length;
-      }
+    this.booksFacade.cartItems$.subscribe((data) => {
+      this.availableCartItem = data.length;
     });
   }
 }

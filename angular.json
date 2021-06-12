@@ -409,31 +409,6 @@
         }
       }
     },
-    "feature-feature-search": {
-      "projectType": "library",
-      "root": "libs/feature/feature-search",
-      "sourceRoot": "libs/feature/feature-search/src",
-      "prefix": "buyonline",
-      "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/feature/feature-search"],
-          "options": {
-            "jestConfig": "libs/feature/feature-search/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/feature/feature-search/src/**/*.ts",
-              "libs/feature/feature-search/src/**/*.html"
-            ]
-          }
-        }
-      }
-    },
     "feature-search": {
       "projectType": "library",
       "root": "libs/feature/search",
@@ -454,6 +429,31 @@
             "lintFilePatterns": [
               "libs/feature/search/src/**/*.ts",
               "libs/feature/search/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-data-access-state": {
+      "projectType": "library",
+      "root": "libs/shared/data-access/state",
+      "sourceRoot": "libs/shared/data-access/state/src",
+      "prefix": "buyonline",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/shared/data-access/state"],
+          "options": {
+            "jestConfig": "libs/shared/data-access/state/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/shared/data-access/state/src/**/*.ts",
+              "libs/shared/data-access/state/src/**/*.html"
             ]
           }
         }

@@ -44,7 +44,10 @@
       "@buyonline/feature/feature-search": [
         "libs/feature/feature-search/src/index.ts"
       ],
-      "@buyonline/feature/search": ["libs/feature/search/src/index.ts"]
+      "@buyonline/feature/search": ["libs/feature/search/src/index.ts"],
+      "@buyonline/shared/data-access/state": [
+        "libs/shared/data-access/state/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

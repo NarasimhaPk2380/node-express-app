@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UtilsService } from '@buyonline/shared/data-access/services';
 import { book } from '@buyonline/shared/data-access/models';
+import { BooksFacade } from '@buyonline/shared/data-access/state';
 
 @Component({
   selector: 'buyonline-my-cart-items-layout',
@@ -10,15 +10,11 @@ import { book } from '@buyonline/shared/data-access/models';
 })
 export class MyCartItemsLayoutComponent implements OnInit {
   cartItemsList: Array<book> = [];
-  constructor(private utilsSrvc: UtilsService, private router: Router) {
-    this.updateCartItems();
-  }
+  constructor(private booksFacade: BooksFacade, private router: Router) {}
 
-  ngOnInit(): void {}
-
-  updateCartItems(): void {
-    this.cartItemsList = [
-      ...(this.utilsSrvc.modifybooksAppJson?.cartItems || []),
-    ];
+  ngOnInit(): void {
+    this.booksFacade.cartItems$.subscribe((data) => {
+      this.cartItemsList = [...data];
+    });
   }
 }

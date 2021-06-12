@@ -1,19 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UtilsService } from '@buyonline/shared/data-access/services';
+import { BooksFacade } from '@buyonline/shared/data-access/state';
 import { MaterialModule } from '@buyonline/shared/ui/material';
 import { of } from 'rxjs';
 import { NavbarLayoutComponent } from './navbar-layout.component';
-const UtilsServiceMock = {
-  bookAppSubject$: of({ type: 'addToCart', value: '' }),
-  modifybooksAppJson: {
-    cartItems: [
-      {
-        id: '1',
-      },
-    ],
-  },
+const BooksFacadeMock = {
+  cartItems$: of([{ id: '1' }]),
 };
 describe('NavbarLayoutComponent', () => {
   let component: NavbarLayoutComponent;
@@ -23,18 +16,14 @@ describe('NavbarLayoutComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [NavbarLayoutComponent],
       imports: [RouterTestingModule, BrowserAnimationsModule, MaterialModule],
-      providers: [
-        {
-          provide: UtilsService,
-          useValue: UtilsServiceMock,
-        },
-      ],
+      providers: [{ provide: BooksFacade, useValue: BooksFacadeMock }],
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NavbarLayoutComponent);
     component = fixture.componentInstance;
+    TestBed.inject(BooksFacade);
     fixture.detectChanges();
   });
 

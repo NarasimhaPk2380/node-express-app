@@ -3,14 +3,16 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CardsLayoutComponent } from './cards-layout.component';
-import { Store } from '@ngrx/store';
-import { deleteFromCart } from '@buyonline/shared/data-access/state';
+import {
+  BooksFacade,
+  deleteFromCart,
+} from '@buyonline/shared/data-access/state';
 
 describe('CardsLayoutComponent', () => {
   let component: CardsLayoutComponent;
   let fixture: ComponentFixture<CardsLayoutComponent>;
-  const storeMock = {
-    dispatch: jasmine.createSpy('dispatch'),
+  const booksFacadeMock = {
+    deleteFromCart: jasmine.createSpy('deleteFromCart'),
   };
   const mockRouter = {
     navigate: jasmine.createSpy('navigate'),
@@ -21,7 +23,7 @@ describe('CardsLayoutComponent', () => {
       imports: [RouterTestingModule],
       providers: [
         { provide: Router, useValue: mockRouter },
-        { provide: Store, useValue: storeMock },
+        { provide: BooksFacade, useValue: booksFacadeMock },
       ],
     }).compileComponents();
   });
@@ -29,7 +31,6 @@ describe('CardsLayoutComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CardsLayoutComponent);
     component = fixture.componentInstance;
-    TestBed.inject(Store);
     component.cardsList = [
       { id: '1', volumeInfo: { title: 'abc' } },
       { id: '2', volumeInfo: { title: 'xyz' } },
@@ -75,12 +76,7 @@ describe('CardsLayoutComponent', () => {
       By.css('#deleteBtnId')
     );
     deleteBtnsList[0].nativeElement.click();
-    const itemContainerlist = fixture.debugElement.queryAll(
-      By.css('.item-container')
-    );
-    itemContainerlist[0].nativeElement.click();
-    const bookId = itemContainerlist[0].nativeElement.getAttribute('id');
-    expect(storeMock.dispatch).toHaveBeenCalledWith(deleteFromCart({ bookId }));
+    expect(booksFacadeMock.deleteFromCart).toHaveBeenCalled();
   });
 
   it('should invoke goToDetailsPage', () => {

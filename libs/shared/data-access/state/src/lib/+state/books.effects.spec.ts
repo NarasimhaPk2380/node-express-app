@@ -2,9 +2,9 @@ import { TestBed } from '@angular/core/testing';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { ApiService } from '@buyonline/shared/data-access/services';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Store } from '@ngrx/store';
 import { from, of, ReplaySubject } from 'rxjs';
 import { BooksEffects } from './books.effects';
+import { BooksFacade } from './books.facade';
 
 const ApiServiceMock = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,15 +18,14 @@ const ApiServiceMock = {
     }
   },
 };
-class StoreMock {
-  dispatch() {
-    return;
-  }
-}
+
 describe('BooksEffects', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let actions$ = new ReplaySubject<any>();
   let effects: BooksEffects;
+  const booksFacadeMock = {
+    triggerLoadSpinner: jasmine.createSpy('triggerLoadSpinner'),
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [],
@@ -37,7 +36,7 @@ describe('BooksEffects', () => {
         },
         BooksEffects,
         provideMockActions(() => actions$),
-        { provide: Store, useClass: StoreMock },
+        { provide: BooksFacade, useValue: booksFacadeMock },
       ],
     });
     effects = TestBed.inject(BooksEffects);

@@ -11,7 +11,7 @@ import { book } from '@buyonline/shared/data-access/models';
 
 import { ApiService } from './api.service';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { bookState, loadBooksList } from '@buyonline/shared/data-access/state';
+import { BooksFacade } from '@buyonline/shared/data-access/state';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ import { bookState, loadBooksList } from '@buyonline/shared/data-access/state';
 export class CartService {
   constructor(
     private apiService: ApiService,
-    private store: Store<bookState>
+    private booksFacade: BooksFacade
   ) {}
 
   // API calls invoking
@@ -28,7 +28,7 @@ export class CartService {
       debounceTime(400),
       distinctUntilChanged(),
       switchMap((searchText) => {
-        this.store.dispatch(loadBooksList({ searchText }));
+        this.booksFacade.loadBooksList(searchText);
         return of([]);
       })
     );

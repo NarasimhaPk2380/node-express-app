@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { StarRatingModule } from '@buyonline/shared/pipes/star-rating';
 import { of } from 'rxjs';
-import { addToCart } from '@buyonline/shared/data-access/state';
+import { addToCart, BooksFacade } from '@buyonline/shared/data-access/state';
 
 import { CartDetailsLayoutComponent } from './cart-details-layout.component';
 import { Store } from '@ngrx/store';
@@ -17,8 +17,8 @@ describe('CartDetailsLayoutComponent', () => {
   let fixture: ComponentFixture<CartDetailsLayoutComponent>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   // let actions$ = new Observable<any>();
-  const storeMock = {
-    dispatch: jasmine.createSpy('dispatch'),
+  const booksFacade = {
+    addToCart: jasmine.createSpy('addToCart'),
   };
 
   beforeEach(async () => {
@@ -27,7 +27,7 @@ describe('CartDetailsLayoutComponent', () => {
       imports: [StarRatingModule],
       providers: [
         { provide: ActivatedRoute, useClass: ActivatedRouteStub },
-        { provide: Store, useValue: storeMock },
+        { provide: BooksFacade, useValue: booksFacade },
       ],
     }).compileComponents();
   });
@@ -46,9 +46,7 @@ describe('CartDetailsLayoutComponent', () => {
     fixture.detectChanges();
     const buttonElement = fixture.debugElement.query(By.css('.add-to-cart'));
     buttonElement.nativeElement.click();
-    expect(storeMock.dispatch).toHaveBeenCalledWith(
-      addToCart({ book: { id: '12', volumeInfo: { publisher: 'abc' } } })
-    );
+    expect(booksFacade.addToCart).toHaveBeenCalled();
   });
 
   it('should add the items to the cart when user clicks buy', () => {

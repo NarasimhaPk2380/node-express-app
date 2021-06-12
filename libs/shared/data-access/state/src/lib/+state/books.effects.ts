@@ -12,29 +12,26 @@ import { ApiService } from '@buyonline/shared/data-access/services';
 import { exhaustMap, map, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { book } from '@buyonline/shared/data-access/models';
-import { Store } from '@ngrx/store';
-import { bookState } from './books.state';
+import { BooksFacade } from './books.facade';
 
 @Injectable()
 export class BooksEffects {
   constructor(
     private actions$: Actions,
     private apiService: ApiService,
-    private store: Store<bookState>
+    private booksFacade: BooksFacade
   ) {}
 
   loadSearchBookResults$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadBooksList),
-      tap(() => this.store.dispatch(setLoadingSpinner({ status: true }))),
+      tap(() => this.booksFacade.triggerLoadSpinner(true)),
       exhaustMap((action) => {
         return action.searchText
           ? this.apiService
               .apiRequest('GET', {}, { q: action.searchText })
               .pipe(
-                tap(() =>
-                  this.store.dispatch(setLoadingSpinner({ status: false }))
-                ),
+                tap(() => this.booksFacade.triggerLoadSpinner(false)),
                 map((booksJson) => {
                   return loadBooksListSuccess({
                     searchText: action.searchText,

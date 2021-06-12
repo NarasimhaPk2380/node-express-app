@@ -6,16 +6,15 @@ import { CheckoutLayoutComponent } from './checkout-layout.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MaterialModule } from '@buyonline/shared/ui/material';
 import { By } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
-import { submitOrder } from '@buyonline/shared/data-access/state';
+import { BooksFacade } from '@buyonline/shared/data-access/state';
 describe('CheckoutLayoutComponent', () => {
   let component: CheckoutLayoutComponent;
   let fixture: ComponentFixture<CheckoutLayoutComponent>;
   const mockRouter = {
     navigate: jasmine.createSpy('navigate'),
   };
-  const storeMock = {
-    dispatch: jasmine.createSpy('dispatch'),
+  const booksFacadeMock = {
+    submitCheckout: jasmine.createSpy('submitCheckout'),
   };
   const fakeAddressJson = {
     name: 'asdad',
@@ -35,7 +34,7 @@ describe('CheckoutLayoutComponent', () => {
       ],
       providers: [
         { provide: Router, useValue: mockRouter },
-        { provide: Store, useValue: storeMock },
+        { provide: BooksFacade, useValue: booksFacadeMock },
         MatSnackBar,
       ],
     }).compileComponents();
@@ -145,8 +144,6 @@ describe('CheckoutLayoutComponent', () => {
       done();
     });
     component.snackBar._openedSnackBarRef?.dismissWithAction();
-    expect(storeMock.dispatch).toHaveBeenCalledWith(
-      submitOrder({ billingAddress: fakeAddressJson })
-    );
+    expect(booksFacadeMock.submitCheckout).toHaveBeenCalled();
   });
 });

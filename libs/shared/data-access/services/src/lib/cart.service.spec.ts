@@ -4,7 +4,10 @@ import { CartService } from './cart.service';
 import { Store } from '@ngrx/store';
 import { from, of } from 'rxjs';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { loadBooksList } from '@buyonline/shared/data-access/state';
+import {
+  BooksFacade,
+  loadBooksList,
+} from '@buyonline/shared/data-access/state';
 
 const ApiServiceMock = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,8 +24,8 @@ const ApiServiceMock = {
 
 describe('CartService', () => {
   let service: CartService;
-  const storeMock = {
-    dispatch: jasmine.createSpy('dispatch'),
+  const booksFacadeMock = {
+    loadBooksList: jasmine.createSpy('loadBooksList'),
   };
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -31,7 +34,7 @@ describe('CartService', () => {
           provide: ApiService,
           useValue: ApiServiceMock,
         },
-        { provide: Store, useValue: storeMock },
+        { provide: BooksFacade, useValue: booksFacadeMock },
       ],
     });
     service = TestBed.inject(CartService);
@@ -49,9 +52,7 @@ describe('CartService', () => {
 
   it('Should dispatch loadBooks action with the text', (done) => {
     service.searchBooks(of('ang')).subscribe(() => {
-      expect(storeMock.dispatch).toHaveBeenCalledWith(
-        loadBooksList({ searchText: 'ang' })
-      );
+      expect(booksFacadeMock.loadBooksList).toHaveBeenCalled();
       done();
     });
   });

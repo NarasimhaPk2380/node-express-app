@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { book } from '@buyonline/shared/data-access/models';
-import { addToCart, bookState } from '@buyonline/shared/data-access/state';
+import {
+  addToCart,
+  BooksFacade,
+  bookState,
+} from '@buyonline/shared/data-access/state';
 
 @Component({
   selector: 'buyonline-cart-details-layout',
@@ -15,7 +19,7 @@ export class CartDetailsLayoutComponent implements OnInit {
   ratingArr: Array<number> = [1, 2, 3, 4, 5];
   constructor(
     private acRoute: ActivatedRoute,
-    private store: Store<bookState>
+    private booksFacade: BooksFacade
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +30,6 @@ export class CartDetailsLayoutComponent implements OnInit {
   }
 
   addToCart(): void {
-    this.store.dispatch(addToCart({ book: this.bookDetailsJson }));
+    this.booksFacade.addToCart({ ...this.bookDetailsJson });
   }
 }

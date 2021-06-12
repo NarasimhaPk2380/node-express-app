@@ -8,7 +8,11 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { bookState, submitOrder } from '@buyonline/shared/data-access/state';
+import {
+  BooksFacade,
+  bookState,
+  submitOrder,
+} from '@buyonline/shared/data-access/state';
 
 @Component({
   selector: 'buyonline-checkout-layout',
@@ -20,7 +24,7 @@ export class CheckoutLayoutComponent implements OnInit {
   isFormSubmitted = false;
   constructor(
     private fb: FormBuilder,
-    private store: Store<bookState>,
+    private booksFacade: BooksFacade,
     public snackBar: MatSnackBar,
     public router: Router
   ) {}
@@ -38,9 +42,7 @@ export class CheckoutLayoutComponent implements OnInit {
   }
 
   submitCheckout(): void {
-    this.store.dispatch(
-      submitOrder({ billingAddress: { ...this.checkoutForm.value } })
-    );
+    this.booksFacade.submitCheckout({ ...this.checkoutForm.value });
     const snackBarRef = this.snackBar.open(
       'Your order is placed successfully....',
       'Go to my collection',

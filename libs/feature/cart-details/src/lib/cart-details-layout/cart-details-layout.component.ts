@@ -17,14 +17,11 @@ export class CartDetailsLayoutComponent implements OnInit {
   bookDetailsJson!: book;
   availableRating = 3;
   ratingArr: Array<number> = [1, 2, 3, 4, 5];
-  constructor(
-    private acRoute: ActivatedRoute,
-    private booksFacade: BooksFacade
-  ) {}
+  constructor(private booksFacade: BooksFacade) {}
 
   ngOnInit(): void {
-    this.acRoute.data.subscribe((booksData) => {
-      this.bookDetailsJson = { ...booksData[0] };
+    this.booksFacade.bookDetails$.subscribe((booksData) => {
+      this.bookDetailsJson = { ...booksData } as book;
       this.availableRating = this.bookDetailsJson.volumeInfo?.rating || 0;
     });
   }

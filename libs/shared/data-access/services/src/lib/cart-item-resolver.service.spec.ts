@@ -4,17 +4,26 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { CartItemResolverService } from './cart-item-resolver.service';
-import { CartService } from './cart.service';
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { BooksFacade } from '@buyonline/shared/data-access/state';
+import { delay, filter, take } from 'rxjs/operators';
 
-class CartServiceMock {
-  retrieveBookId(bookId: string) {
+class BooksFacadeMock {
+  retrieveBookDetails(bookId: string) {
     return of({ bookId });
+  }
+  waitForLoadingBookDetails() {
+    return of(false).pipe(
+      delay(1000),
+      filter((loaded) => !loaded),
+      take(1)
+    );
   }
 }
 
 fdescribe('CartItemResolverService', () => {
   let resolver: CartItemResolverService;
-  let service: CartService;
+  let service: BooksFacade;
   let route: ActivatedRoute;
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,8 +32,8 @@ fdescribe('CartItemResolverService', () => {
         CartItemResolverService,
         [
           {
-            provide: CartService,
-            useClass: CartServiceMock,
+            provide: BooksFacade,
+            useClass: BooksFacadeMock,
           },
         ],
         {
@@ -43,7 +52,7 @@ fdescribe('CartItemResolverService', () => {
 
   beforeEach(() => {
     resolver = TestBed.inject(CartItemResolverService);
-    service = TestBed.inject(CartService);
+    service = TestBed.inject(BooksFacade);
     route = TestBed.get(ActivatedRoute);
   });
 
@@ -52,8 +61,8 @@ fdescribe('CartItemResolverService', () => {
   });
 
   it('should call retrieveBookId for getting the bookdetails', () => {
-    spyOn(service, 'retrieveBookId').and.callThrough();
+    spyOn(service, 'retrieveBookDetails').and.callThrough();
     resolver.resolve(route.snapshot);
-    expect(service.retrieveBookId).toHaveBeenCalled();
+    expect(service.retrieveBookDetails).toHaveBeenCalled();
   });
 });

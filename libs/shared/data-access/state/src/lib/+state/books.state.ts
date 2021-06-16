@@ -10,6 +10,7 @@ export interface bookState {
   // eslint-disable-next-line @typescript-eslint/ban-types
   billingAddress: billingAddress | {};
   showLoading: boolean;
+  error: string;
 }
 
 export const initialState: bookState = {
@@ -20,4 +21,5 @@ export const initialState: bookState = {
   billingAddress: {},
   bookDetails: {},
   showLoading: false,
+  error: '',
 };

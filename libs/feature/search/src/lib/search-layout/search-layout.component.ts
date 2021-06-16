@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { CartService } from '@buyonline/shared/data-access/services';
 import { book } from '@buyonline/shared/data-access/models';
 import { BooksFacade } from '@buyonline/shared/data-access/state';
 
@@ -16,12 +15,9 @@ export class SearchLayoutComponent implements OnInit, OnDestroy {
   bookSearchText$ = new Subject<string>();
   booksSubscription: Subscription = new Subscription();
   spinner$: Observable<boolean> = this.booksFacade.loadingSpinner$;
-  constructor(
-    private cartSrvc: CartService,
-    private router: Router,
-    private booksFacade: BooksFacade
-  ) {
-    this.booksSubscription = this.cartSrvc
+  error$: Observable<string> = this.booksFacade.error$;
+  constructor(private router: Router, private booksFacade: BooksFacade) {
+    this.booksSubscription = this.booksFacade
       .searchBooks(this.bookSearchText$)
       .subscribe(() => {
         return;

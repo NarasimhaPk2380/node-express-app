@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { ApiService } from '@buyonline/shared/data-access/services';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { from, of, ReplaySubject } from 'rxjs';
+import { from, of, ReplaySubject, throwError } from 'rxjs';
 import { BooksEffects } from './books.effects';
 import { BooksFacade } from './books.facade';
 
@@ -16,6 +17,18 @@ const ApiServiceMock = {
     } else {
       return of({ id: '12' });
     }
+  },
+};
+
+const ApiServiceMock1 = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  apiRequest() {
+    return throwError(
+      new HttpErrorResponse({
+        status: 400,
+        statusText: 'Bad Request',
+      })
+    );
   },
 };
 
@@ -75,19 +88,57 @@ describe('BooksEffects', () => {
       searchText: 'as',
     });
     effects.loadBookDetails$.subscribe((data) => {
-      expect(data?.book?.id).toBe('12');
+      if (data.type === '[BOOK DETAILS PAGE] RETRIVE BOOK DETAILS SUCCESS') {
+        expect(data?.book?.id).toBe('12');
+      }
       done();
     });
   });
+});
 
-  it('should get the bookDetails on failed action', async (done) => {
+describe('BooksEffects on failure cases', () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let actions$ = new ReplaySubject<any>();
+  let effects: BooksEffects;
+  const booksFacadeMock = {
+    triggerLoadSpinner: jasmine.createSpy('triggerLoadSpinner'),
+  };
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [],
+      providers: [
+        {
+          provide: ApiService,
+          useValue: ApiServiceMock1,
+        },
+        BooksEffects,
+        provideMockActions(() => actions$),
+        { provide: BooksFacade, useValue: booksFacadeMock },
+      ],
+    });
+    effects = TestBed.inject(BooksEffects);
+  });
+  it('should give message on failed bookslist', async (done) => {
+    actions$ = new ReplaySubject(1);
+    actions$.next({
+      type: '[SEARCH PAGE] LOAD BOOKS LIST',
+      searchText: 'as',
+    });
+    effects.loadSearchBookResults$.subscribe((data) => {
+      expect(data.type).toBe('[SEARCH PAGE] LOAD BOOKS LIST FAILURE');
+      done();
+    });
+  });
+  it('should give message on failed bookdetails', async (done) => {
     actions$ = new ReplaySubject(1);
     actions$.next({
       type: '[BOOK DETAILS PAGE] RETRIVE BOOK DETAILS',
-      searchText: '',
+      searchText: 'as',
     });
     effects.loadBookDetails$.subscribe((data) => {
-      expect(data?.book?.id).toBe('12');
+      expect(data.type).toBe(
+        '[BOOK DETAILS PAGE] RETRIVE BOOK DETAILS FAILURE'
+      );
       done();
     });
   });

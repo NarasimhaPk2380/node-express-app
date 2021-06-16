@@ -11,6 +11,10 @@ export const getSearchText = createSelector(retrieveBookState, (state) => {
   return state.searchText;
 });
 
+export const getError = createSelector(retrieveBookState, (state) => {
+  return state.error;
+});
+
 export const getSearchedBooks = createSelector(
   retrieveBookState,
   (state: bookState) => {
@@ -18,6 +22,12 @@ export const getSearchedBooks = createSelector(
   }
 );
 
+export const getBookDetails = createSelector(
+  retrieveBookState,
+  (state: bookState) => {
+    return state.bookDetails;
+  }
+);
 export const getCartItems = createSelector(
   retrieveBookState,
   (state: bookState) => {

@@ -1,7 +1,7 @@
 <div class="main-container">
     <div>
         <form class="search--form">
-            <mat-form-field class="form--field">
+            <mat-form-field class="form--field" >
                 <mat-icon matPrefix>book</mat-icon>
                 <input type="text" placeholder="Search for books" aria-label="books" matInput [value]="availSearchVal$ | async" id="searchInput"
                     (keyup)="bookSearchText$.next(bookrefId?.value)" #bookrefId>
@@ -9,7 +9,10 @@
             </mat-form-field>
             <p *ngIf="bookrefId.value">
                 Showing results for <span>{{bookrefId?.value}}</span> 
-                <mat-spinner [diameter]="30" *ngIf="spinner$ | async"></mat-spinner>
+                <mat-spinner [diameter]="30" *ngIf="spinner$ | async" ></mat-spinner>
+            </p>
+            <p *ngIf="error$ | async">
+                {{error$ | async}}
             </p>
         </form>
     </div>

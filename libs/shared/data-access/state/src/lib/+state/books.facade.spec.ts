@@ -8,6 +8,7 @@ import {
   addToCart,
   deleteFromCart,
   loadBooksList,
+  retrieveBookDetails,
   setLoadingSpinner,
   submitOrder,
 } from './books.actions';
@@ -108,6 +109,17 @@ describe('BooksFacade', () => {
         done.fail(err);
       }
     });
+    it('Should invoke retrieveBookDetails', async (done) => {
+      try {
+        facade.retrieveBookDetails('2');
+        expect(storeMock.dispatch).toHaveBeenCalledWith(
+          retrieveBookDetails({ bookId: '2' })
+        );
+        done();
+      } catch (err) {
+        done.fail(err);
+      }
+    });
     it('Should invoke addToCart', async (done) => {
       try {
         facade.addToCart({ id: '1' });
@@ -140,6 +152,21 @@ describe('BooksFacade', () => {
       } catch (err) {
         done.fail(err);
       }
+    });
+
+    it('Should dispatch loadBooks action with the text', (done) => {
+      facade.searchBooks(of('ang')).subscribe(() => {
+        expect(storeMock.dispatch).toHaveBeenCalledWith(
+          loadBooksList({ searchText: 'ang' })
+        );
+        done();
+      });
+    });
+    it('Should return boolean', (done) => {
+      facade.waitForLoadingBookDetails().subscribe((data) => {
+        expect(data).toBeFalsy();
+        done();
+      });
     });
   });
 });

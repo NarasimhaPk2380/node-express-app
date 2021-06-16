@@ -18,6 +18,15 @@ describe('BooksReducer', () => {
     const { searchedBooksList } = booksReducer(initialState, action);
     expect(searchedBooksList).toEqual(expected);
   });
+  it('should show books list if loadbooks action gets failure', () => {
+    const action = {
+      type: '[SEARCH PAGE] LOAD BOOKS LIST FAILURE',
+      searchText: 'ang',
+      booksList: [],
+    };
+    const { searchedBooksList } = booksReducer(initialState, action);
+    expect(searchedBooksList).toEqual([]);
+  });
 
   it('should show books details if loadbooksdetails action gets success', () => {
     const expected = { id: '1', volumeInfo: { title: 'Angular' } };
@@ -27,6 +36,15 @@ describe('BooksReducer', () => {
     };
     const { bookDetails } = booksReducer(initialState, action);
     expect(bookDetails).toEqual(expected);
+  });
+
+  it('should show books details if loadbooksdetails action gets failure', () => {
+    const action = {
+      type: '[BOOK DETAILS PAGE] RETRIVE BOOK DETAILS FAILURE',
+      book: {},
+    };
+    const { bookDetails } = booksReducer(initialState, action);
+    expect(bookDetails).toEqual({});
   });
   it('should show added item in the cartItems', () => {
     const expected = { id: '1', volumeInfo: { title: 'Angular' } };

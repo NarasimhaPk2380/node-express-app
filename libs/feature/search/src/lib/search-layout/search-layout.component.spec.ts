@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { book } from '@buyonline/shared/data-access/models';
-import { CartService } from '@buyonline/shared/data-access/services';
 import { Observable, of } from 'rxjs';
 import { MaterialModule } from '@buyonline/shared/ui/material';
 import { FlexCardsLayoutModule } from '@buyonline/shared/ui/flex-cards-layout';
@@ -17,13 +16,11 @@ class RouterStub {
     return;
   }
 }
-class CartServiceMock {
-  searchBooks(): Observable<Array<book>> {
-    return of([{ id: '1' }]);
-  }
-}
 
 const BooksFacadeMock = {
+  searchBooks(): Observable<Array<book>> {
+    return of([{ id: '1' }]);
+  },
   searchedBooks$: of([{ id: '1' }]),
   get spinner$() {
     return of(false);
@@ -47,10 +44,6 @@ describe('SearchLayoutComponent', () => {
       imports: [BrowserAnimationsModule, FlexCardsLayoutModule, MaterialModule],
       providers: [
         { provide: Router, useClass: RouterStub },
-        {
-          provide: CartService,
-          useClass: CartServiceMock,
-        },
         { provide: Store, useValue: storeMock },
         { provide: BooksFacade, useValue: BooksFacadeMock },
       ],
@@ -60,7 +53,6 @@ describe('SearchLayoutComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchLayoutComponent);
     component = fixture.componentInstance;
-    TestBed.inject(CartService);
     TestBed.inject(BooksFacade);
     fixture.detectChanges();
   });

@@ -2,10 +2,20 @@ import { Injectable } from '@angular/core';
 import { billingAddress, book } from '@buyonline/shared/data-access/models';
 
 import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+import { Observable } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  take,
+} from 'rxjs/operators';
 import {
   addToCart,
   deleteFromCart,
   loadBooksList,
+  retrieveBookDetails,
   setLoadingSpinner,
   submitOrder,
 } from './books.actions';
@@ -15,6 +25,8 @@ import {
   getMyCollection,
   getLoadingSpinner,
   getSearchText,
+  getBookDetails,
+  getError,
 } from './books.selectors';
 import { bookState } from './books.state';
 
@@ -27,6 +39,8 @@ export class BooksFacade {
   searchedBooks$ = this.store.select(getSearchedBooks);
   cartItems$ = this.store.select(getCartItems);
   myCollection$ = this.store.select(getMyCollection);
+  bookDetails$ = this.store.select(getBookDetails);
+  error$ = this.store.select(getError);
 
   constructor(private store: Store<bookState>) {}
 
@@ -36,6 +50,9 @@ export class BooksFacade {
   loadBooksList(searchText: string) {
     this.store.dispatch(loadBooksList({ searchText }));
   }
+  retrieveBookDetails(bookId: string) {
+    this.store.dispatch(retrieveBookDetails({ bookId }));
+  }
   addToCart(book: book): void {
     this.store.dispatch(addToCart({ book }));
   }
@@ -44,5 +61,22 @@ export class BooksFacade {
   }
   submitCheckout(billingAddress: billingAddress): void {
     this.store.dispatch(submitOrder({ billingAddress }));
+  }
+
+  searchBooks(searchText$: Observable<string>): Observable<Array<book>> {
+    return searchText$.pipe(
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap((searchText: string) => {
+        this.store.dispatch(loadBooksList({ searchText }));
+        return of([]);
+      })
+    );
+  }
+  waitForLoadingBookDetails(): Observable<boolean> {
+    return this.loadingSpinner$.pipe(
+      filter((loaded) => !loaded),
+      take(1)
+    );
   }
 }

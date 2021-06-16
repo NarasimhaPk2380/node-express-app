@@ -1,16 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
 import { StarRatingModule } from '@buyonline/shared/pipes/star-rating';
 import { of } from 'rxjs';
-import { addToCart, BooksFacade } from '@buyonline/shared/data-access/state';
+import { BooksFacade } from '@buyonline/shared/data-access/state';
 
 import { CartDetailsLayoutComponent } from './cart-details-layout.component';
-import { Store } from '@ngrx/store';
-
-class ActivatedRouteStub {
-  data = of([{ id: '12', volumeInfo: { publisher: 'abc' } }]);
-}
 
 describe('CartDetailsLayoutComponent', () => {
   let component: CartDetailsLayoutComponent;
@@ -19,23 +13,20 @@ describe('CartDetailsLayoutComponent', () => {
   // let actions$ = new Observable<any>();
   const booksFacade = {
     addToCart: jasmine.createSpy('addToCart'),
+    bookDetails$: of({ id: '12', volumeInfo: { publisher: 'abc' } }),
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CartDetailsLayoutComponent],
       imports: [StarRatingModule],
-      providers: [
-        { provide: ActivatedRoute, useClass: ActivatedRouteStub },
-        { provide: BooksFacade, useValue: booksFacade },
-      ],
+      providers: [{ provide: BooksFacade, useValue: booksFacade }],
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CartDetailsLayoutComponent);
     component = fixture.componentInstance;
-    TestBed.inject(ActivatedRoute);
     fixture.detectChanges();
   });
 

@@ -14,5 +14,6 @@ module.exports = {
     '<rootDir>/libs/feature/feature-search',
     '<rootDir>/libs/feature/search',
     '<rootDir>/libs/shared/data-access/state',
+    '<rootDir>/apps/node-express-server',
   ],
 };

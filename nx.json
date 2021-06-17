@@ -29,10 +29,10 @@
       "tags": [],
       "implicitDependencies": ["bookscart"]
     },
-    "shared-data-access-services": {
+    "feature-cart-details": {
       "tags": []
     },
-    "shared-data-access-models": {
+    "feature-checkout": {
       "tags": []
     },
     "feature-my-cart-items": {
@@ -41,28 +41,31 @@
     "feature-my-collection": {
       "tags": []
     },
-    "feature-cart-details": {
+    "feature-search": {
       "tags": []
     },
-    "shared-ui-app-navbar-layout": {
+    "node-express-server": {
       "tags": []
     },
-    "shared-ui-material": {
+    "shared-data-access-models": {
       "tags": []
     },
-    "shared-ui-flex-cards-layout": {
+    "shared-data-access-services": {
+      "tags": []
+    },
+    "shared-data-access-state": {
       "tags": []
     },
     "shared-pipes-star-rating": {
       "tags": []
     },
-    "feature-checkout": {
+    "shared-ui-app-navbar-layout": {
       "tags": []
     },
-    "feature-search": {
+    "shared-ui-flex-cards-layout": {
       "tags": []
     },
-    "shared-data-access-state": {
+    "shared-ui-material": {
       "tags": []
     }
   }

@@ -4,6 +4,11 @@ export interface appSubject {
   value: any;
 }
 
+export interface bookApi {
+  items: book[];
+  totalItems: number;
+}
+
 export interface book {
   id: string;
   volumeInfo?: {

@@ -31,7 +31,7 @@ export default {
         )
         .status(200);
     } catch (e) {
-      return res.json({ err: e?.message }).status(500);
+      return res.json({ err: e?.message }).status(200);
     }
   },
 };

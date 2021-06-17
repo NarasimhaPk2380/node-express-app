@@ -12,8 +12,7 @@ export default ({ app }: { app: express.Application }) => {
 
   /// catch 404 and forward to error handler
   app.use((req, res, next) => {
-    console.log(req);
-    const err = new CustomError(404, 'Not Foundasdfsfsdffsdad');
+    const err = new CustomError(404, 'Not Found');
     next(err);
   });
 

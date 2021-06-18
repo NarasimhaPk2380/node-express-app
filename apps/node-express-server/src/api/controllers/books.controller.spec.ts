@@ -1,10 +1,9 @@
-import { bookApi } from '@buyonline/shared/data-access/models';
 import * as request from 'supertest';
-import { objectExtraction } from './utils';
+
 describe('GET /api/books', () => {
   let server;
   beforeEach(() => {
-    server = require('./main');
+    server = require('../../main');
   });
   afterAll(() => {
     server.close();
@@ -47,26 +46,5 @@ describe('GET /api/books', () => {
 
   it('Check if data shows error when particular book id is not available', (done) => {
     request(server).get('/api/books/av').expect(200, done);
-  });
-});
-
-describe('Utils functions', () => {
-  it('check empty object assigned when no imagelinks', () => {
-    const data = objectExtraction(
-      {
-        items: [{ id: '2', volumeInfo: {} }],
-        totalItems: 1,
-      },
-      '1'
-    );
-    const data1 = objectExtraction({
-      items: [
-        { id: '2', volumeInfo: {} },
-        { id: '3', volumeInfo: {} },
-      ],
-      totalItems: 1,
-    }) as bookApi;
-    expect(data.volumeInfo).toHaveProperty('imageLinks');
-    expect(data1.items[0].volumeInfo).toHaveProperty('imageLinks');
   });
 });
